@@ -1,0 +1,8 @@
+# Dependências (Composer / npm)
+/vendor/
+/node_modules/
+
+# IDEs e editores
+.vscode/
+.claude/
+
