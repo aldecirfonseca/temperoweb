@@ -1,10 +1,10 @@
-# 🌶️ Tempero Web
+# Tempero Web
 
 Projeto prático desenvolvido com os alunos do **4º período do curso de Análise e Desenvolvimento de Sistemas** da **Faculdade Santa Marcelina — unidade Muriaé (FASM)**, em **2026**.
 
 O objetivo é construir, do zero e sem frameworks, uma aplicação web em **PHP** seguindo o padrão **MVC (Model-View-Controller)**. Assim, a turma entende na prática como funcionam por dentro os recursos que frameworks como Laravel e CodeIgniter entregam prontos: roteamento, controllers, views, helpers e configuração.
 
-> 🚧 **Projeto em desenvolvimento.** A estrutura evolui a cada aula, então algumas partes ainda estão incompletas.
+> **Projeto em desenvolvimento.** A estrutura evolui a cada aula, então algumas partes ainda estão incompletas.
 
 ---
 
@@ -53,7 +53,7 @@ temperoweb/
 
 ---
 
-## 🔀 Como funciona o roteamento
+## Como funciona o roteamento
 
 Toda requisição passa pelo `.htaccess`, que a envia ao `index.php`. Em seguida, o `index.php` divide a URL em segmentos e decide qual controller e qual método executar:
 
@@ -81,7 +81,7 @@ O nome do controller recebe a primeira letra maiúscula automaticamente (`produt
 
 ---
 
-## ⚙️ Como rodar localmente
+## Como rodar localmente
 
 ### 1. Pré-requisitos
 
@@ -122,7 +122,7 @@ O roteador assume que a aplicação roda na **raiz do domínio**, então é prec
 
 Depois, reinicie o Apache.
 
-> 💡 No **Laragon**, basta colocar a pasta em `www/`: o Virtual Host `temperoweb.test` é criado automaticamente. Nesse caso, ajuste a `BASEURL` no `Config.php`.
+> No **Laragon**, basta colocar a pasta em `www/`: o Virtual Host `temperoweb.test` é criado automaticamente. Nesse caso, ajuste a `BASEURL` no `Config.php`.
 
 ### 4. Configurar a aplicação
 
@@ -153,7 +153,7 @@ Abra `http://temperoweb/` no navegador. Você deve ver a mensagem de boas-vindas
 
 ---
 
-## ➕ Criando um novo controller
+## Criando um novo controller
 
 1. Crie o arquivo `app/controller/Exemplo.php`:
 
@@ -195,7 +195,7 @@ class Exemplo extends BaseController
 
 ---
 
-## 👥 Equipe
+## Equipe
 
 **Professor:** Aldecir Fonseca
 
