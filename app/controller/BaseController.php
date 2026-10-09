@@ -44,4 +44,23 @@ class BaseController
             require_once 'app/helper/' . $helper . ".php";
         }
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $nomeModel
+     * @return object
+     */
+    public function model(string $nomeModel): object
+    {
+        $nomeModel = ucfirst($nomeModel) . 'Model';
+
+        if (file_exists('app/model/' . $nomeModel . '.php')) {
+            require_once 'app/model/' . $nomeModel . '.php';
+
+            return new $nomeModel();
+        } else {
+            return (object)null;
+        }
+    }
 }

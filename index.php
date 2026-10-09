@@ -3,7 +3,7 @@
     require_once 'app/config/Config.php';
     require_once 'app/library/Request.php';
     require_once 'app/controller/BaseController.php';
-
+    require_once 'app/model/BaseModel.php';
     //
 
     $caminho        = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
