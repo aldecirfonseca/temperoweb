@@ -66,19 +66,41 @@
                                 </li>
                             <?php endforeach; ?>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle me-1" aria-hidden="true"></i>Aldecir
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><h6 class="dropdown-header">Administração</h6></li>
-                                    <li><a class="dropdown-item" href="<?= baseUrl() ?>Categoria"><i class="bi bi-tags" aria-hidden="true"></i>Categorias</a></li>
-                                    <li><a class="dropdown-item" href="<?= baseUrl() ?>Produto"><i class="bi bi-basket" aria-hidden="true"></i>Produtos</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-people" aria-hidden="true"></i>Usuários</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-key" aria-hidden="true"></i>Trocar a senha</a></li>
-                                </ul>
-                            </li>
+                            <?php $usuario = usuarioLogado(); ?>
+                            <?php if ($usuario === null): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?= menuAtivo('Login') ?>" href="<?= baseUrl() ?>Login">
+                                        <i class="bi bi-person-circle me-1" aria-hidden="true"></i>Entrar
+                                    </a>
+                                </li>
+                            <?php else: ?>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <!-- o nome vem da sessão (não passa pelo escapa() do controller): escapar aqui -->
+                                        <i class="bi bi-person-circle me-1" aria-hidden="true"></i><?= htmlspecialchars($usuario['nome'], ENT_QUOTES, 'UTF-8') ?>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><h6 class="dropdown-header">Cardápio</h6></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Categoria"><i class="bi bi-tags" aria-hidden="true"></i>Categorias</a></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Produto"><i class="bi bi-basket" aria-hidden="true"></i>Produtos</a></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Chef"><i class="bi bi-person-badge" aria-hidden="true"></i>Chefs</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><h6 class="dropdown-header">Blog</h6></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>BlogCategoria"><i class="bi bi-bookmarks" aria-hidden="true"></i>Categorias do blog</a></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Noticia"><i class="bi bi-newspaper" aria-hidden="true"></i>Notícias</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><h6 class="dropdown-header">Atendimento</h6></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Reserva"><i class="bi bi-calendar-check" aria-hidden="true"></i>Reservas</a></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Contato"><i class="bi bi-envelope" aria-hidden="true"></i>Mensagens</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <?php if ($usuario['nivel'] == 1): ?>
+                                            <li><a class="dropdown-item" href="<?= baseUrl() ?>Usuario"><i class="bi bi-people" aria-hidden="true"></i>Usuários</a></li>
+                                        <?php endif; ?>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Senha"><i class="bi bi-key" aria-hidden="true"></i>Trocar a senha</a></li>
+                                        <li><a class="dropdown-item" href="<?= baseUrl() ?>Login/sair"><i class="bi bi-box-arrow-right" aria-hidden="true"></i>Sair</a></li>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
 
                             <li class="nav-item ms-lg-2">
                                 <a class="btn btn-primary nav-cta" href="<?= baseUrl() ?>Home/reserva" <?= (menuAtivo('Home/reserva') ? 'aria-current="page"' : '') ?>>

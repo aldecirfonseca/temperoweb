@@ -9,7 +9,7 @@
                 <div class="col-md-6 col-lg-4 reveal">
                     <article class="tw-card chef-card">
                         <div class="tw-card-media">
-                            <img src="<?= baseUrl() ?>assets/img/home/<?= $chef['imagem'] ?>" width="360" height="420"
+                            <img src="<?= imagemUrl($chef['imagem'], 'chef') ?>" width="360" height="420"
                                 alt="Foto de <?= $chef['nome'] ?>" loading="lazy">
                         </div>
                         <div class="tw-card-body">

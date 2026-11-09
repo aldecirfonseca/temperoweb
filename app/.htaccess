@@ -1,0 +1,3 @@
+# O código da aplicação só é carregado pelo index.php (require).
+# Ninguém precisa abrir estes arquivos direto pelo navegador.
+Require all denied

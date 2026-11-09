@@ -11,7 +11,9 @@
                     <h2 class="h3 mb-1">Envie uma mensagem</h2>
                     <p class="text-muted-tw mb-4">Campos marcados com <span class="text-danger" aria-hidden="true">*</span> são obrigatórios.</p>
 
-                    <form class="needs-validation" action="#" method="post" id="contactForm" novalidate>
+                    <?= mensagens() ?>
+
+                    <form class="needs-validation" action="<?= baseUrl() ?>Home/enviarContato" method="post" id="contactForm" novalidate>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nome" class="form-label">Nome <span class="req" aria-hidden="true">*</span></label>

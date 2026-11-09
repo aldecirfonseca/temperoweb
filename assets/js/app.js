@@ -72,5 +72,8 @@
                 field.mask(mascaraTelefone.apply({}, arguments), options);
             }
         });
+
+        // Máscara de valor em reais: digita da direita para a esquerda (1.234,50)
+        jQuery("[data-mascara=valor]").mask("#.##0,00", { reverse: true });
     }
 })();

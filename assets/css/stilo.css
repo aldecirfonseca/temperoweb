@@ -1066,6 +1066,36 @@ img {
     color: #5C4D46;    /* 7.4:1 */
 }
 
+.status-badge.is-pending {
+    background: var(--tw-accent-soft);
+    color: #854D0E;    /* 6.6:1 */
+}
+
+/* Miniatura das listas e prévia da imagem nos formulários */
+.admin-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: var(--tw-radius-sm);
+    border: 1px solid var(--tw-border);
+    background: var(--tw-bg);
+}
+
+.form-thumb {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--tw-radius-sm);
+    border: 1px solid var(--tw-border);
+    background: var(--tw-bg);
+}
+
+/* Prévia da mensagem na lista de contatos */
+.admin-resumo {
+    max-width: 18rem;
+    vertical-align: bottom;
+}
+
 /* 8. Animações ------------------------------------------------------------- */
 /* Só esconde quando o JS está ativo: sem JS, o conteúdo aparece normalmente */
 .js .reveal {

@@ -44,7 +44,9 @@
                     <h2 class="h3 mb-1">Reserve uma mesa</h2>
                     <p class="text-muted-tw mb-4">Campos marcados com <span class="text-danger" aria-hidden="true">*</span> são obrigatórios.</p>
 
-                    <form class="needs-validation" action="#" method="post" novalidate>
+                    <?= mensagens() ?>
+
+                    <form class="needs-validation" action="<?= baseUrl() ?>Home/enviarReserva" method="post" novalidate>
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="nome" class="form-label">Nome completo <span class="req" aria-hidden="true">*</span></label>
@@ -75,7 +77,7 @@
                                 <label for="horario" class="form-label">Horário <span class="req" aria-hidden="true">*</span></label>
                                 <select class="form-select" id="horario" name="horario" required>
                                     <option value="">Selecione</option>
-                                    <?php foreach (['11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '17:00', '17:30'] as $horario): ?>
+                                    <?php foreach ($aHorario as $horario): ?>
                                         <option value="<?= $horario ?>"><?= $horario ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -86,7 +88,7 @@
                                 <label for="pessoas" class="form-label">Pessoas <span class="req" aria-hidden="true">*</span></label>
                                 <select class="form-select" id="pessoas" name="pessoas" required>
                                     <option value="">Selecione</option>
-                                    <?php for ($i = 1; $i <= 10; $i++): ?>
+                                    <?php for ($i = 1; $i <= $maximoPessoas; $i++): ?>
                                         <option value="<?= $i ?>"><?= $i ?> <?= ($i == 1 ? "pessoa" : "pessoas") ?></option>
                                     <?php endfor; ?>
                                 </select>

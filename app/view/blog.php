@@ -12,9 +12,9 @@
                         <div class="col-md-6 reveal">
                             <article class="tw-card post-card">
                                 <div class="tw-card-media">
-                                    <img src="<?= baseUrl() ?>assets/img/blog/main-blog/<?= $noticia['imagem'] ?>"
+                                    <img src="<?= imagemUrl($noticia['imagem'], 'noticia') ?>"
                                         alt="" loading="lazy">
-                                    <time class="post-date">
+                                    <time class="post-date" datetime="<?= $noticia['dataPublicacao'] ?>">
                                         <strong><?= $noticia['dia'] ?></strong>
                                         <span><?= $noticia['mes'] ?></span>
                                     </time>
@@ -24,7 +24,7 @@
                                     <p><?= $noticia['resumo'] ?></p>
                                     <ul class="post-meta">
                                         <li><i class="bi bi-tag me-1" aria-hidden="true"></i><?= $noticia['categoria'] ?></li>
-                                        <li><i class="bi bi-chat me-1" aria-hidden="true"></i><?= $noticia['comentarios'] ?> comentários</li>
+                                        <li><i class="bi bi-calendar3 me-1" aria-hidden="true"></i><?= formatoData($noticia['dataPublicacao']) ?></li>
                                     </ul>
                                 </div>
                             </article>

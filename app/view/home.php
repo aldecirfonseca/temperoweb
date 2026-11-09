@@ -92,7 +92,7 @@
                 <div class="col-md-6 col-lg-4 reveal">
                     <article class="tw-card">
                         <div class="tw-card-media">
-                            <img src="<?= baseUrl() ?>assets/img/home/<?= $prato['imagem'] ?>" width="360" height="355"
+                            <img src="<?= imagemUrl($prato['imagem'], 'produto') ?>" width="360" height="355"
                                 alt="<?= $prato['nome'] ?>" loading="lazy">
                             <span class="tag"><?= $prato['tag'] ?></span>
                         </div>

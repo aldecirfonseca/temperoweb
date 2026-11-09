@@ -17,9 +17,9 @@ class Database
      * Database durante a requisição, evitando reconectar ao banco
      * a cada select/insert/update/delete ou a cada model criado.
      *
-     * @return object
+     * @return PDO
      */
-    public function conecta()
+    public function conecta(): PDO
     {
         if (self::$conexao instanceof PDO) {
             return self::$conexao;
@@ -28,22 +28,27 @@ class Database
         $dsn = self::$dbConfigaraConexao['DB_DRIVE'] .
                 ":host=" . self::$dbConfigaraConexao['DB_HOST'] .
                 ";port=" . self::$dbConfigaraConexao['DB_PORT'] .
-                ";dbname=" . self::$dbConfigaraConexao['DB_BASEDADOS'];
+                ";dbname=" . self::$dbConfigaraConexao['DB_BASEDADOS'] .
+                ";charset=utf8mb4";
 
         try {
             self::$conexao = new PDO(
                 $dsn,
                 self::$dbConfigaraConexao['DB_USER'],         // usuário
-                self::$dbConfigaraConexao['DB_PASSWORD'],     // senha
-                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
+                self::$dbConfigaraConexao['DB_PASSWORD']      // senha
             );
 
-            //configurando o modo de tratamento de erro
+            // erros do banco viram exceções (PDOException)
             self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        } catch (\Exception $ex) {
-            echo $ex->getMessage();
-            self::$conexao = null;
+            // fetch/fetchAll devolvem só as chaves por nome (sem os índices numéricos)
+            self::$conexao->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+        } catch (PDOException $ex) {
+            // Sem banco não há o que fazer: para aqui com uma mensagem clara,
+            // em vez de devolver null e quebrar mais adiante no prepare().
+            http_response_code(500);
+            exit("Não foi possível conectar ao banco de dados: " . $ex->getMessage());
         }
 
         return self::$conexao;
@@ -52,100 +57,83 @@ class Database
     /**
      * select
      *
-     * @param string $comando_sql 
-     * @param array $dados 
-     * @param string $tipoRetorno 
-     * @return array
+     * @param string $comando_sql
+     * @param array $dados
+     * @param string $tipoRetorno  'all' = todas as linhas; 'first' = só a primeira
+     * @return array|false         false quando 'first' não encontra nada
      */
     public function select(
-        string $comando_sql, 
+        string $comando_sql,
         array $dados = [],
         string $tipoRetorno = 'all'
     ) {
-        $conn = $this->conecta();
-        $data = $conn->prepare($comando_sql, array( PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL ) );
+        $data = $this->conecta()->prepare($comando_sql);
 
         // executa o comando SQL
         $data->execute($dados);
 
         if ($tipoRetorno == 'all') {
-            $dadosRows = $data->fetchAll();
-        } else {
-            $dadosRows = $data->fetch();
+            return $data->fetchAll();
         }
 
-        return $dadosRows;
+        return $data->fetch();
     }
 
     /**
      * insert
      *
-     * @param string $comando_sql 
-     * @param array $dados 
-     * @return int
+     * @param string $comando_sql
+     * @param array $dados
+     * @return int  id gerado pelo AUTO_INCREMENT
      */
     public function insert(
-        string $comando_sql, 
+        string $comando_sql,
         array $dados = []
-    ) {
+    ): int {
         $conn = $this->conecta();
-        $data = $conn->prepare($comando_sql, array( PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL ) );
+        $data = $conn->prepare($comando_sql);
 
         // executa o comando SQL
         $data->execute($dados);
 
-        if ($conn->lastInsertId() > 0) {
-            return $conn->lastInsertId();
-        } else {
-            return 0;
-        }
+        return (int)$conn->lastInsertId();
     }
 
     /**
      * update
      *
-     * @param string $comando_sql 
-     * @param array $dados 
-     * @return int
+     * @param string $comando_sql
+     * @param array $dados
+     * @return int  linhas efetivamente alteradas
      */
     public function update(
-        string $comando_sql, 
+        string $comando_sql,
         array $dados = []
-    ) {
-        $conn = $this->conecta();
-        $data = $conn->prepare($comando_sql, array( PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL ) );
+    ): int {
+        $data = $this->conecta()->prepare($comando_sql);
 
         // executa o comando SQL
         $data->execute($dados);
 
-        if ($data->rowCount() > 0) {
-            return $data->rowCount();
-        } else {
-            return 0;
-        }
+        return $data->rowCount();
     }
 
     /**
      * delete
      *
-     * @param string $comando_sql 
-     * @param array $dados 
-     * @return int
+     * @param string $comando_sql
+     * @param array $dados
+     * @return int  linhas excluídas
      */
     public function delete(
-        string $comando_sql, 
+        string $comando_sql,
         array $dados = []
-    ) {
-        $conn = $this->conecta();
-        $data = $conn->prepare($comando_sql, array( PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL ) );
+    ): int {
+        $data = $this->conecta()->prepare($comando_sql);
 
         // executa o comando SQL
         $data->execute($dados);
 
-        if ($data->rowCount() > 0) {
-            return $data->rowCount();
-        } else {
-            return 0;
-        }
+        return $data->rowCount();
     }
 }
