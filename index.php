@@ -1,9 +1,18 @@
 <?php
 
+// Sessão: guarda o usuário logado na área administrativa.
+// - cookie_httponly: o JavaScript da página não consegue ler o cookie da sessão
+// - cookie_samesite=Lax: outro site não consegue enviar um POST usando a sessão do usuário
+session_start([
+    'cookie_httponly' => true,
+    'cookie_samesite' => 'Lax',
+]);
+
 // Carregando configurações, libraries e classes base
 require_once 'app/config/Config.php';
 require_once 'app/library/Request.php';
 require_once 'app/controller/BaseController.php';
+require_once 'app/controller/AdminController.php';
 require_once 'app/model/BaseModel.php';
 
 // Obter Controller e Método a partir da URL: /{controller}/{metodo}/{action}/{id}
